@@ -1,4 +1,4 @@
-package co.com.sofka.crud.DTOs;
+package co.com.sofka.crud.Dtos;
 
 import co.com.sofka.crud.Models.Tarea;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @Data
 @Builder(toBuilder = true)
-public class TodoDTO {
+public class TodoDto {
 
     @NotBlank
     private Long id;

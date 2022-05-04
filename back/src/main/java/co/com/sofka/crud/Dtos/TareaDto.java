@@ -1,4 +1,4 @@
-package co.com.sofka.crud.DTOs;
+package co.com.sofka.crud.Dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @Data
 @Builder(toBuilder = true)
-public class TareaDTO {
+public class TareaDto {
 
     @NotBlank
     private Long id;
