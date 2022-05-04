@@ -11,13 +11,14 @@ public class TareaService {
     @Autowired
     private TareaRepository tareaRepository;
 
-    public Tarea saveTarea(Tarea tarea) { return tareaRepository.save(tarea);
+    public Tarea saveTarea(Tarea tarea) {
+        return tareaRepository.save(tarea);
     }
 
     public Tarea updateTarea(Tarea tarea) {
         if (!tareaRepository.existsById(tarea.getId())) {
-                throw new RuntimeException("La tarea con id " + tarea.getId() +
-                        " se encuentra en nuestra base de datos.");
+            throw new RuntimeException("La tarea con id " + tarea.getId() +
+                    " se encuentra en nuestra base de datos.");
         }
         return tareaRepository.save(tarea);
     }

@@ -13,18 +13,20 @@ public class TodoService {
     @Autowired
     private TodoRepository todoRepository;
 
-    public Iterable<Todo> listasTodos() { return todoRepository.findAll(); }
+    public Iterable<Todo> listasTodos() {
+        return todoRepository.findAll();
+    }
 
-    public Todo save(Todo todo){
+    public Todo save(Todo todo) {
         return todoRepository.save(todo);
     }
 
-    public void delete(Long id, ArrayList<Long> idTareas){
+    public void delete(Long id, ArrayList<Long> idTareas) {
         todoRepository.delete(get(id));
     }
 
-    public Todo get(Long id){
-         return todoRepository.findById(id).orElseThrow();
+    public Todo get(Long id) {
+        return todoRepository.findById(id).orElseThrow();
     }
 
 

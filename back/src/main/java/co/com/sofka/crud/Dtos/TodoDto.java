@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +23,7 @@ public class TodoDto {
     private String name;
 
     @NotBlank
-    private ArrayList<Tarea> grupoTareas;
+    private List<Tarea> grupoTareas;
 
 
 }

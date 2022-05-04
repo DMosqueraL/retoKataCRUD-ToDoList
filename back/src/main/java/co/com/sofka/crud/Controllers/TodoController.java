@@ -15,22 +15,22 @@ public class TodoController {
     private TodoService todoService;
 
     @GetMapping(value = "api/todos")
-    public Iterable<Todo> listaTodos(){
+    public Iterable<Todo> listaTodos() {
         return todoService.listasTodos();
     }
-    
+
     @PostMapping(value = "api/todo")
-    public Todo saveTodo(@RequestBody Todo todo){
+    public Todo saveTodo(@RequestBody Todo todo) {
         return todoService.save(todo);
     }
 
     @DeleteMapping(value = "api/{id}/todo")
-    public void deleteTodo(@PathVariable("id")Long id, @RequestBody ArrayList<Long> idTareas){
+    public void deleteTodo(@PathVariable("id") Long id, @RequestBody ArrayList<Long> idTareas) {
         todoService.delete(id, idTareas);
     }
 
     @GetMapping(value = "api/{id}/todo")
-    public Todo get(@PathVariable("id") Long id){
+    public Todo get(@PathVariable("id") Long id) {
         return todoService.get(id);
     }
 
