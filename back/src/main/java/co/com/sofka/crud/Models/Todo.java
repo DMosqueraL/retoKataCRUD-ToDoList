@@ -1,6 +1,7 @@
 package co.com.sofka.crud.Models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Table (name = "ToDoList")
@@ -12,16 +13,20 @@ public class Todo {
     @Column(name="name")
     private String name;
 
-    @Column()
-    private boolean completed;
-    private String groupListId;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_todo")
+    private ArrayList<Tarea> grupoTareas;
 
-    public String getGroupListId() {
-        return groupListId;
+    public Todo() {
     }
 
-    public void setGroupListId(String groupListId) {
-        this.groupListId = groupListId;
+    public Todo(String name) {
+        this.name = name;
+    }
+
+    public Todo(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public Long getId() {
@@ -40,11 +45,11 @@ public class Todo {
         this.name = name;
     }
 
-    public boolean isCompleted() {
-        return completed;
+    public ArrayList<Tarea> getGrupoTareas() {
+        return grupoTareas;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    public void setGrupoTareas(ArrayList<Tarea> grupoTareas) {
+        this.grupoTareas = grupoTareas;
     }
 }
