@@ -16,14 +16,16 @@ public class TareaService {
 
     public Tarea updateTarea(Tarea tarea) {
         if (!tareaRepository.existsById(tarea.getId())) {
-                throw new RuntimeException("La tarea con id " + tarea.getId() + " no fue encontrada.");
+                throw new RuntimeException("La tarea con id " + tarea.getId() +
+                        " se encuentra en nuestra base de datos.");
         }
         return tareaRepository.save(tarea);
     }
 
     public void deleteTarea(Long id) {
         if (!tareaRepository.existsById(id)) {
-            throw new RuntimeException("La tarea con id " + id + " no fue encontrada.");
+            throw new RuntimeException("La tarea con id " + id +
+                    " se encuentra en nuestra base de datos.");
         }
         tareaRepository.deleteById(id);
     }
