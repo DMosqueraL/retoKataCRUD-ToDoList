@@ -5,39 +5,33 @@ import co.com.sofka.crud.Services.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class TodoController {
 
     @Autowired
-    private TodoService service;
+    private TodoService todoService;
 
     @GetMapping(value = "api/todos")
-    public Iterable<Todo> list(){
-        return service.list();
+    public Iterable<Todo> listaTodos(){
+        return todoService.listasTodos();
     }
     
     @PostMapping(value = "api/todo")
-    public Todo save(@RequestBody Todo todo){
-        return service.save(todo);
-    }
-
-    @PutMapping(value = "api/todo")
-    public Todo update(@RequestBody Todo todo){
-        if(todo.getId() != null){
-            return service.save(todo);
-        }
-        throw new RuntimeException("No existe el id para actualziar");
+    public Todo saveTodo(@RequestBody Todo todo){
+        return todoService.save(todo);
     }
 
     @DeleteMapping(value = "api/{id}/todo")
-    public void delete(@PathVariable("id")Long id){
-        service.delete(id);
+    public void deleteTodo(@PathVariable("id")Long id, @RequestBody ArrayList<Long> idTareas){
+        todoService.delete(id, idTareas);
     }
 
     @GetMapping(value = "api/{id}/todo")
     public Todo get(@PathVariable("id") Long id){
-        return service.get(id);
+        return todoService.get(id);
     }
 
 }

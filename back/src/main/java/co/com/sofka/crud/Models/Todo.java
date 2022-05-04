@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 
 @Entity
-@Table (name = "ToDoList")
+@Table (name = "todo_lista")
 public class Todo {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
