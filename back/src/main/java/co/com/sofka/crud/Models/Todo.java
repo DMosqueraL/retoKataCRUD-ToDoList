@@ -1,9 +1,12 @@
 package co.com.sofka.crud.Models;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 
 @Entity
+@Builder(toBuilder = true)
 @Table (name = "todo_lista")
 public class Todo {
     @Id

@@ -1,7 +1,10 @@
 package co.com.sofka.crud.Models;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 
+@Builder(toBuilder = true)
 @Table(name="tarea")
 public class Tarea {
 
