@@ -1,15 +1,18 @@
 package co.com.sofka.crud.Models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table (name = "ToDoList")
 public class Todo {
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name="name")
     private String name;
+
+    @Column()
     private boolean completed;
     private String groupListId;
 
