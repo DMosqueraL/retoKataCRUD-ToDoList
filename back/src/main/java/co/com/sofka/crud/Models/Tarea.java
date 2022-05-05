@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,12 +22,15 @@ public class Tarea {
     private Long id;
 
     @Column(name = "name")
+    @NotBlank
     private String name;
 
     @Column(name = "Completado")
+    @NotBlank
     private Boolean completado;
 
     @Column(name = "id_todoLista")
+    @NotBlank
     private Long idTareas;
 
 }

@@ -1,5 +1,7 @@
 package co.com.sofka.crud.Services;
 
+import co.com.sofka.crud.Dtos.TodoDto;
+import co.com.sofka.crud.Mappers.TodoMapper;
 import co.com.sofka.crud.Models.Todo;
 import co.com.sofka.crud.Repositories.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,21 +15,27 @@ public class TodoService {
     @Autowired
     private TodoRepository todoRepository;
 
-    public Iterable<Todo> listasTodos() {
-        return todoRepository.findAll();
+    TodoMapper todoMapper = new TodoMapper();
+
+   public Iterable<TodoDto> listasTodos(){
+       Iterable<Todo> listaTodos = todoRepository.findAll();
+       ArrayList<TodoDto> listaTodosDtos = new ArrayList<>();
+       listaTodos.forEach(lista ->
+               listaTodosDtos.add(todoMapper
+                       .deEntidadADto(lista)));
+       Iterable<TodoDto> iterableListaDtos = listaTodosDtos;
+       return listaTodosDtos;
     }
 
-    public Todo save(Todo todo) {
-        return todoRepository.save(todo);
+    public TodoDto guardarTodo(TodoDto todoDto){
+       Todo todo = todoMapper.deTodoDtoAEntidad(todoDto);
+       if (todo.getName().length()>0){
+           todo = todoRepository.save(todo);
+       }
+       todoDto.setId(todo.getId());
+       return todoDto;
     }
+    public boolean existsById(Long id) { return todoRepository.existsById(id);  }
 
-    public void delete(Long id, ArrayList<Long> idTareas) {
-        todoRepository.delete(get(id));
-    }
-
-    public Todo get(Long id) {
-        return todoRepository.findById(id).orElseThrow();
-    }
-
-
+    public void deleteById(Long id) { todoRepository.deleteById(id); }
 }

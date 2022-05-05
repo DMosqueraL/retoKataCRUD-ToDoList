@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -21,10 +22,12 @@ public class Todo {
     private Long id;
 
     @Column(name = "name")
+    @NotBlank
     private String name;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_todoLista")
+    @NotBlank
     private List<Tarea> grupoTareas;
 
 
