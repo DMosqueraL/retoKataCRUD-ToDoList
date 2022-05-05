@@ -23,5 +23,5 @@ public class TareaDto {
     private Boolean completado;
 
     @NotBlank
-    private Long idTodo;
+    private Long idTareas;
 }

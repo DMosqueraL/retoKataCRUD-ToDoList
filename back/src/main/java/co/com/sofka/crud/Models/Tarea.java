@@ -10,13 +10,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Entity
 @Builder(toBuilder = true)
-@Table(name = "tarea")
+@Table(name = "tareas")
 public class Tarea {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(unique = true, nullable = false)
     private Long id;
 
     @Column(name = "name")
@@ -25,7 +26,7 @@ public class Tarea {
     @Column(name = "Completado")
     private Boolean completado;
 
-    @Column(name = "id_todo")
-    private Long idTodo;
+    @Column(name = "id_todoLista")
+    private Long idTareas;
 
 }

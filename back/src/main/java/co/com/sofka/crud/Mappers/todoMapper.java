@@ -9,16 +9,13 @@ public class todoMapper {
 
     public Todo deTodoDtoAEntidad(TodoDto todoDto) {
         return Todo.builder().id(todoDto.getId())
-                .name(todoDto.getName())
-                .grupoTareas(todoDto.getGrupoTareas())
-                .build();
+                .name(todoDto.getName()).build();
+
     }
 
     public Todo deEntidadADto(Todo todo) {
-        return Todo.builder()
-                .id(todo.getId())
+        return Todo.builder().id(todo.getId())
                 .name(todo.getName())
-                .grupoTareas(todo.getGrupoTareas())
                 .build();
     }
 }

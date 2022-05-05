@@ -12,7 +12,7 @@ public class tareaMapper {
                 .id(tareaDto.getId())
                 .name(tareaDto.getName())
                 .completado(tareaDto.getCompletado())
-                .idTodo(tareaDto.getIdTodo())
+                .idTareas(tareaDto.getIdTareas())
                 .build();
     }
 
@@ -21,7 +21,7 @@ public class tareaMapper {
                 .id(tarea.getId())
                 .name(tarea.getName())
                 .completado((tarea.getCompletado()))
-                .idTodo(tarea.getIdTodo())
+                .idTareas(tarea.getIdTareas())
                 .build();
     }
 }

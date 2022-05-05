@@ -13,17 +13,20 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder(toBuilder = true)
-@Table(name = "todo_lista")
+@Table(name = "todo_listas")
 public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
     private Long id;
 
     @Column(name = "name")
     private String name;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_todo")
+    @JoinColumn(name = "id_todoLista")
     private List<Tarea> grupoTareas;
+
+
 
 }
