@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { HOST_API } from "../conexiones/HOST_API";
 import { Store } from "../hooks/Store";
 
@@ -10,13 +10,13 @@ export const Form = ({ idTareas }) => {
   } = useContext(Store);
   const item = todo.item;
   const [state, setState] = useState(item);
-  const [estaDesactivado, setEstaDesactivado] = useState(true);
-  const [haEscrito, setHasEscrito] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [hasWritten, setHasWritten] = useState(false);
 
   const onAdd = (event) => {
     event.preventDefault();
-    setEstaDesactivado(true);
-    setHasEscrito(false);
+    setIsDisabled(true);
+    setHasWritten(false);
 
     const request = {
       name: state.name,
@@ -25,7 +25,7 @@ export const Form = ({ idTareas }) => {
       idTareas: idTareas,
     };
 
-    fetch(HOST_API + "api/todo/tarea", {
+    fetch(HOST_API + "tarea", {
       method: "POST",
       body: JSON.stringify(request),
       headers: {
@@ -50,7 +50,7 @@ export const Form = ({ idTareas }) => {
       idTareas: idTareas,
     };
 
-    fetch(HOST_API + "api/todo/tarea", {
+    fetch(HOST_API + "tarea", {
       method: "PUT",
       body: JSON.stringify(request),
       headers: {
@@ -75,8 +75,8 @@ export const Form = ({ idTareas }) => {
           defaultValue={item.idTareas === idTareas ? item.name : ""}
           onChange={(event) => {
             setState({ ...state, name: event.target.value });
-            setHasEscrito(true);
-            setEstaDesactivado(event.target.value.length > 0 ? false : true);
+            setHasWritten(true);
+            setIsDisabled(event.target.value.length > 0 ? false : true);
           }}
         />
         {item.id && item.idTareas === idTareas && (
@@ -86,7 +86,7 @@ export const Form = ({ idTareas }) => {
         )}
         {!item.id && (
           <button
-            dissbled={estaDesactivado}
+            dissbled={isDisabled}
             className="CrearBoton"
             onClick={onAdd}
           >
@@ -94,7 +94,7 @@ export const Form = ({ idTareas }) => {
           </button>
         )}
       </form>
-      {estaDesactivado && haEscrito && (
+      {isDisabled && hasWritten && (
         <span className="campo-obligatorio">Este campo es obligatorio</span>
       )}
     </div>

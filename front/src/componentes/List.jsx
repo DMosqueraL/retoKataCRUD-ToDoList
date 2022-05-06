@@ -78,7 +78,7 @@ export const List = () => {
   };
   return (
     <>
-      <table cellspacing="0">
+      <table cellSpacing="0">
         <tbody>
           {currentList.map((list) => {
             return (

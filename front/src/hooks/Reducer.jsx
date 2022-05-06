@@ -1,5 +1,4 @@
 export function Reducer(state, action) {
-
   switch (action.type) {
     case "update-item":
       const todoUpItem = state.todo;
@@ -31,6 +30,21 @@ export function Reducer(state, action) {
       const todoUp = state.todo.list;
       todoUp.push(action.item);
       return { ...state, todo: { list: todoUp, item: {} } };
+    case "delete-list":
+      const listUpDelete = state.listas;
+      const listOfListUpdate = listUpDelete.list.filter((item) => {
+        return item.id !== action.id;
+      });
+      listUpDelete.list = listOfListUpdate;
+      return { ...state, listas: listUpDelete };
+    case "update-listOfList":
+      const listUpList = state.listas;
+      listUpList.list = action.list;
+      return { ...state, listas: listUpList };
+    case "add-list":
+      const listUp = state.listas.list;
+      listUp.push(action.item);
+      return { ...state, listas: { list: listUp, item: {} } };
     default:
       return state;
   }
