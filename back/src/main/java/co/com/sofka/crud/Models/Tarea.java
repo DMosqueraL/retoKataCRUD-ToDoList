@@ -27,9 +27,9 @@ public class Tarea {
 
     @Column(name = "Completado")
     @NotBlank
-    private Boolean completado;
+    private Boolean completed;
 
-    @Column(name = "id_todoLista")
+    @Column(name = "idTareas")
     @NotBlank
     private Long idTareas;
 

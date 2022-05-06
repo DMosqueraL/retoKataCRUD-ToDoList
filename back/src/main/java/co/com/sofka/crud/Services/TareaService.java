@@ -1,26 +1,20 @@
 package co.com.sofka.crud.Services;
 
 import co.com.sofka.crud.Dtos.TareaDto;
-import co.com.sofka.crud.Dtos.TodoDto;
 import co.com.sofka.crud.Mappers.TareaMapper;
 import co.com.sofka.crud.Models.Tarea;
-import co.com.sofka.crud.Models.Todo;
 import co.com.sofka.crud.Repositories.TareaRepository;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 
 @Service
 public class TareaService {
 
+    TareaMapper tareaMapper = new TareaMapper();
     @Autowired
     private TareaRepository tareaRepository;
-
-
-    TareaMapper tareaMapper = new TareaMapper();
 
     public Iterable<TareaDto> listasTareas() {
         Iterable<Tarea> listaTareas = tareaRepository.findAll();
@@ -31,14 +25,6 @@ public class TareaService {
         return listaTareasDtos;
     }
 
-    public void borrarTarea(Long id) {
-        if (!tareaRepository.existsById(id)) {
-            throw new RuntimeException("La tarea con id " + id +
-                    " no se encuentra en nuestra base de datos.");
-        }
-        tareaRepository.deleteById(id);
-    }
-
     public TareaDto guardarTarea(TareaDto tareaDto) {
         Tarea tarea = tareaMapper.deTareaDtoAEntidad(tareaDto);
         if (tarea.getName().length() > 0) {
@@ -47,6 +33,26 @@ public class TareaService {
         tareaDto.setId(tarea.getId());
         return tareaDto;
     }
+
+    public void borrarTarea(Long id) {
+        if (!tareaRepository.existsById(id)) {
+            throw new RuntimeException("La tarea con id " + id +
+                    " no se encuentra en nuestra base de datos.");
+        }
+        tareaRepository.deleteById(id);
+    }
+
+    public Tarea obtener(Long id) {
+        return tareaRepository.findById(id).orElseThrow();
+    }
+
+    public boolean existeEnBD(Long id) {
+        return tareaRepository.existsById(id);
+    }
+
+
+
+
 
 
 

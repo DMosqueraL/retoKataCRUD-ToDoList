@@ -26,10 +26,9 @@ public class Todo {
     private String name;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_todoLista")
+    @JoinColumn(name = "idTareas")
     @NotBlank
-    private List<Tarea> grupoTareas;
-
+    private List<Tarea> groupTareas;
 
 
 }

@@ -22,7 +22,7 @@ public class TodoDto {
     private String name;
 
     @NotBlank
-    private List<Tarea> grupoTareas;
+    private List<Tarea> groupTareas;
 
 
 }
