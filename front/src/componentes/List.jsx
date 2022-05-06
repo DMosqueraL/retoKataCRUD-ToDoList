@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
-import { Store } from "./componentes/InitialState";
-import { HOST_API } from "./App";
+import { Store } from "../hooks/Store";
+import { HOST_API } from "../conexiones/HOST_API";
 
 export const List = () => {
   const {

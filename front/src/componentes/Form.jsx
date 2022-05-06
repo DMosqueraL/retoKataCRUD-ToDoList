@@ -1,8 +1,8 @@
 import React, { useContext, useRef, useState } from "react";
-import { HOST_API } from "../App";
-import { Store } from "../hooks/InitialState";
+import { HOST_API } from "../conexiones/HOST_API";
+import { Store } from "../hooks/Store";
 
-export const Form = () => {
+export const Form = ({ grupoListaId }) => {
   const formRef = useRef(null);
   const {
     dispatch,
@@ -10,14 +10,19 @@ export const Form = () => {
   } = useContext(Store);
   const item = todo.item;
   const [state, setState] = useState(item);
+  const [estaDesactivado, setEstaDesactivado] = useState(true);
+  const [haEscrito, setHasEscrito] = useState(false);
 
   const onAdd = (event) => {
     event.preventDefault();
+    setEstaDesactivado(true);
+    setHasEscrito(false);
 
     const request = {
       name: state.name,
       id: null,
       completed: false,
+      grupoListaId: grupoListaId,
     };
 
     fetch(HOST_API + "/todo", {
@@ -42,6 +47,7 @@ export const Form = () => {
       name: state.name,
       id: item.id,
       isCompleted: item.isCompleted,
+      grupoListaId: grupoListaId,
     };
 
     fetch(HOST_API + "/todo", {
@@ -60,18 +66,38 @@ export const Form = () => {
   };
 
   return (
-    <form ref={formRef}>
-      <input
-        type="text"
-        name="name"
-        placeholder="¿Qué piensas hacer hoy?"
-        defaultValue={item.name}
-        onChange={(event) => {
-          setState({ ...state, name: event.target.value });
-        }}
-      ></input>
-      {item.id && <button onClick={onEdit}>Actualizar</button>}
-      {!item.id && <button onClick={onAdd}>Crear</button>}
-    </form>
+    <div>
+      <form ref={formRef}>
+        <input
+          type="text"
+          name="name"
+          placeholder="¿Qué piensas hacer hoy?"
+          defaultValue={item.grupoListaId === grupoListaId ? item.name : ""}
+          onChange={(event) => {
+            setState({ ...state, name: event.target.value });
+            setHasEscrito(true);
+            setEstaDesactivado(event.target.value.length > 0 ? false : true);
+          }}
+        />
+        {item.id && item.grupoListaId === grupoListaId && (
+          <button className="updateButton" onClick={onEdit}>
+            Actualizar
+          </button>
+        )}
+        {!item.id && (
+          <button
+            dissbled={estaDesactivado}
+            className="CrearBoton"
+            onClick={onAdd}
+          >
+            Crear
+          </button>
+        )}
+      </form>
+      {estaDesactivado && haEscrito && (
+        <span className="campo-obligatorio">Este campo es obligatorio</span>
+      )}
+    </div>
   );
 };
+export default Form;

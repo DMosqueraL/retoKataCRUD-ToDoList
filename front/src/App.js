@@ -1,6 +1,6 @@
 import React from "react";
 import { Form } from "./componentes/Form";
-import { List } from "./List";
+import { List } from "./componentes/List";
 import { StoreProvider } from "./hooks/StoreProvider";
 
 export const HOST_API = "http://localhost:8080/api";
