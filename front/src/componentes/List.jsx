@@ -1,16 +1,18 @@
-import React, { useContext, useEffect } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import { Store } from "../hooks/Store";
 import { HOST_API } from "../conexiones/HOST_API";
+import Form from "../componentes/Form";
 
 export const List = () => {
   const {
     dispatch,
-    state: { todo },
+    state: { todo, listas },
   } = useContext(Store);
-  const currentList = todo.list;
+  const currentTodos = todo.list;
+  const currentList = listas.list;
 
   useEffect(() => {
-    fetch(HOST_API + "/todos")
+    fetch(HOST_API + "tareas")
       .then((response) => response.json())
       .then((list) => {
         dispatch({ type: "update-list", list });
@@ -18,7 +20,7 @@ export const List = () => {
   }, [dispatch]);
 
   const onDelete = (id) => {
-    fetch(HOST_API + "/" + id + "/todo", {
+    fetch(HOST_API + id + "/tarea", {
       method: "DELETE",
     }).then((list) => {
       dispatch({ type: "delete-item", id });
@@ -29,13 +31,14 @@ export const List = () => {
     dispatch({ type: "edit-item", item: todo });
   };
 
-  const onChange = (event, todo) => {
+  const onChange = (event, todo, idTareas) => {
     const request = {
       name: todo.name,
       id: todo.id,
-      completed: event.target.checked,
+      completado: event.target.checked,
+      idTareas: idTareas,
     };
-    fetch(HOST_API + "/todo", {
+    fetch(HOST_API + "tarea", {
       method: "PUT",
       body: JSON.stringify(request),
       headers: {
@@ -48,43 +51,105 @@ export const List = () => {
       });
   };
 
+  useEffect(() => {
+    fetch(HOST_API + "todos")
+      .then((response) => response.json())
+      .then((list) => {
+        dispatch({ type: "update-listOfList", list });
+      });
+  }, [dispatch]);
+
+  const onDeleteList = (id) => {
+    const deleteAllListItem = todo.list.map((item) => {
+      if (item.idTareas === id) {
+        onDelete(item.id);
+      }
+    });
+
+    fetch(HOST_API + id + "/todo", {
+      method: "DELETE",
+    }).then((list) => {
+      dispatch({ type: "delete-list", id });
+    });
+  };
+
   const decorationDone = {
     textDecoration: "line-through",
   };
   return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <td>ID</td>
-            <td>Tarea</td>
-            <td>¿Completado?</td>
-          </tr>
-        </thead>
+    <>
+      <table cellspacing="0">
         <tbody>
-          {currentList.map((todo) => {
+          {currentList.map((list) => {
             return (
-              <tr key={todo.id} style={todo.completed ? decorationDone : {}}>
-                <td>{todo.id}</td>
-                <td>{todo.name}</td>
-                <td>
-                  <input
-                    type="checkbox"
-                    defaultChecked={todo.completed}
-                    onChange={(event) => onChange(event, todo)}
-                  ></input>
-                </td>
-                <td>
-                  <button onClick={() => onDelete(todo.id)}>Eliminar</button>
-                </td>
-                <td>
-                  <button onClick={() => onEdit(todo)}>Editar</button>
-                </td>
-              </tr>
+              <Fragment key={list.id}>
+                <div className="listDiv">
+                  <tr>
+                    <td id="TitleText">{list.name}</td>
+                    <td>
+                      <button
+                        className="deleteListButton"
+                        onClick={() => onDeleteList(list.id)}
+                      >
+                        Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <Form idTareas={list.id} />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Tarea</td>
+                    <td>¿Completado?</td>
+                  </tr>
+                  {currentTodos.map((todo) => {
+                    if (todo.idTareas === list.id) {
+                      return (
+                        <tr
+                          key={todo.id}
+                          style={todo.completado ? decorationDone : {}}
+                        >
+                          <td>{todo.name}</td>
+                          <td>
+                            <input
+                              type="checkbox"
+                              defaultChecked={todo.completado}
+                              onChange={(event) =>
+                                onChange(event, todo, list.id)
+                              }
+                            ></input>
+                          </td>
+                          <td>
+                            <button
+                              className="DeleteButton"
+                              onClick={() => onDelete(todo.id)}
+                            >
+                              Eliminar
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              className="EditButton"
+                              onClick={() => onEdit(todo)}
+                            >
+                              Editar
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    }
+                    return;
+                  })}
+                </div>
+              </Fragment>
             );
           })}
         </tbody>
       </table>
-    </div>
+    </>
   );
 };
+
+export default List;
