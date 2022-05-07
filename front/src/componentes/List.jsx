@@ -1,18 +1,19 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { useContext, useEffect, Fragment  } from "react";
 import { Store } from "../hooks/Store";
 import { HOST_API } from "../conexiones/HOST_API";
-import Form from "../componentes/Form";
+import FormTodoTask from "../componentes/FormTodoTask"
 
 export const List = () => {
+  
   const {
     dispatch,
-    state: { todo, listas },
+    state: { todoTask, todoList },
   } = useContext(Store);
-  const currentTodos = todo.list;
-  const currentList = listas.list;
+  const currentTodos = todoTask.list;
+  const currentList = todoList.list;
 
   useEffect(() => {
-    fetch(HOST_API + "tareas")
+    fetch(HOST_API + "/todoTask")
       .then((response) => response.json())
       .then((list) => {
         dispatch({ type: "update-list", list });
@@ -20,25 +21,34 @@ export const List = () => {
   }, [dispatch]);
 
   const onDelete = (id) => {
-    fetch(HOST_API + id + "/tarea", {
+    fetch(HOST_API + "/todoTask/" + id, {
       method: "DELETE",
     }).then((list) => {
       dispatch({ type: "delete-item", id });
     });
   };
 
-  const onEdit = (todo) => {
-    dispatch({ type: "edit-item", item: todo });
+  const onDeleteTask = (id) => {
+    fetch(HOST_API + "/todoTask/" + id, {
+      method: "DELETE",
+    }).then((list) => {
+      dispatch({ type: "delete-task", id });
+    });
   };
 
-  const onChange = (event, todo, idTareas) => {
+  const onEdit = (todoTask) => {
+    dispatch({ type: "edit-item", item: todoTask });
+  };
+
+  const onChange = (event, todoTask, id_tareas) => {
     const request = {
-      name: todo.name,
-      id: todo.id,
-      completado: event.target.checked,
-      idTareas: idTareas,
+      name: todoTask.name,
+      id: todoTask.id,
+      completed: event.target.checked,
+      id_tareas: id_tareas,
     };
-    fetch(HOST_API + "tarea", {
+    
+    fetch(HOST_API + "/todoTask", {
       method: "PUT",
       body: JSON.stringify(request),
       headers: {
@@ -46,13 +56,13 @@ export const List = () => {
       },
     })
       .then((response) => response.json())
-      .then((todo) => {
-        dispatch({ type: "update-item", item: todo });
+      .then((todoTask) => {
+        dispatch({ type: "update-item", item: todoTask });
       });
   };
 
   useEffect(() => {
-    fetch(HOST_API + "todos")
+    fetch(HOST_API + "/todoList")
       .then((response) => response.json())
       .then((list) => {
         dispatch({ type: "update-listOfList", list });
@@ -60,13 +70,13 @@ export const List = () => {
   }, [dispatch]);
 
   const onDeleteList = (id) => {
-    const deleteAllListItem = todo.list.map((item) => {
-      if (item.idTareas === id) {
+    const deleteAllListItem = todoList.list.map((item) => {
+      if (item.id_tareas === id) {
         onDelete(item.id);
       }
     });
 
-    fetch(HOST_API + id + "/todo", {
+    fetch(HOST_API + "/todoList/" + id, {
       method: "DELETE",
     }).then((list) => {
       dispatch({ type: "delete-list", id });
@@ -76,8 +86,9 @@ export const List = () => {
   const decorationDone = {
     textDecoration: "line-through",
   };
+
   return (
-    <>
+    <Fragment>
       <table cellSpacing="0">
         <tbody>
           {currentList.map((list) => {
@@ -88,7 +99,7 @@ export const List = () => {
                     <td id="TitleText">{list.name}</td>
                     <td>
                       <button
-                        className="deleteListButton"
+                      className="eliminar"
                         onClick={() => onDeleteList(list.id)}
                       >
                         Eliminar
@@ -97,25 +108,28 @@ export const List = () => {
                   </tr>
                   <tr>
                     <td>
-                      <Form idTareas={list.id} />
+                      <FormTodoTask id_tareas={list.id} />
                     </td>
                   </tr>
+
                   <tr>
-                    <td>Tarea</td>
-                    <td>¿Completado?</td>
+                    <td className="td">Id</td>
+                    <td className="td">Tarea</td>
+                    <td className="td">¿Completa?</td>
                   </tr>
                   {currentTodos.map((todo) => {
-                    if (todo.idTareas === list.id) {
+                    if (todo.id_tareas === list.id) {
                       return (
                         <tr
                           key={todo.id}
-                          style={todo.completado ? decorationDone : {}}
+                          style={todo.completed ? decorationDone : {}}
                         >
+                          <td>{todo.id}</td>
                           <td>{todo.name}</td>
                           <td>
                             <input
                               type="checkbox"
-                              defaultChecked={todo.completado}
+                              defaultChecked={todo.completed}
                               onChange={(event) =>
                                 onChange(event, todo, list.id)
                               }
@@ -123,16 +137,16 @@ export const List = () => {
                           </td>
                           <td>
                             <button
-                              className="DeleteButton"
-                              onClick={() => onDelete(todo.id)}
+                              className="eliminar"
+                              onClick={() => onDeleteTask(todo.id)}
                             >
                               Eliminar
                             </button>
                           </td>
                           <td>
                             <button
-                              className="EditButton"
                               onClick={() => onEdit(todo)}
+                              className="editar"
                             >
                               Editar
                             </button>
@@ -148,7 +162,7 @@ export const List = () => {
           })}
         </tbody>
       </table>
-    </>
+    </Fragment>
   );
 };
 

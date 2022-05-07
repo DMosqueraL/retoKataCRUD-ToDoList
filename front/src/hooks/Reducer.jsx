@@ -1,7 +1,7 @@
 export function Reducer(state, action) {
   switch (action.type) {
     case "update-item":
-      const todoUpItem = state.todo;
+      const todoUpItem = state.todoTask;
       const listUpdateEdit = todoUpItem.list.map((item) => {
         if (item.id === action.item.id) {
           return action.item;
@@ -10,42 +10,51 @@ export function Reducer(state, action) {
       });
       todoUpItem.list = listUpdateEdit;
       todoUpItem.item = {};
-      return { ...state, todo: todoUpItem };
-    case "delete-item":
-      const todoUpDelete = state.todo;
+      return { ...state, todoTask: todoUpItem };
+
+    case "delete-task":
+      const todoUpDelete = state.todoTask;
       const listUpdate = todoUpDelete.list.filter((item) => {
         return item.id !== action.id;
       });
       todoUpDelete.list = listUpdate;
-      return { ...state, todo: todoUpDelete };
-    case "update-list":
-      const todoUpList = state.todo;
-      todoUpList.list = action.list;
-      return { ...state, todo: todoUpList };
+      return { ...state, todoTask: todoUpDelete };
+
     case "edit-item":
-      const todoUpEdit = state.todo;
+      const todoUpEdit = state.todoTask;
       todoUpEdit.item = action.item;
-      return { ...state, todo: todoUpEdit };
+      return { ...state, todoTask: todoUpEdit };
+
     case "add-item":
-      const todoUp = state.todo.list;
+      const todoUp = state.todoTask.list;
       todoUp.push(action.item);
-      return { ...state, todo: { list: todoUp, item: {} } };
+      return { ...state, todoTask: { list: todoUp, item: {} } };
+
+    case "update-list":
+      const todoUpList = state.todoTask;
+      todoUpList.list = action.list;
+      return { ...state, todoTask: todoUpList };
+
     case "delete-list":
-      const listUpDelete = state.listas;
+      const listUpDelete = state.todoList;
       const listOfListUpdate = listUpDelete.list.filter((item) => {
         return item.id !== action.id;
       });
       listUpDelete.list = listOfListUpdate;
-      return { ...state, listas: listUpDelete };
+      return { ...state, todoList: listUpDelete };
+      
     case "update-listOfList":
-      const listUpList = state.listas;
+      const listUpList = state.todoList;
       listUpList.list = action.list;
-      return { ...state, listas: listUpList };
+      return { ...state, todoList: listUpList };
+
     case "add-list":
-      const listUp = state.listas.list;
+      const listUp = state.todoList.list;
       listUp.push(action.item);
-      return { ...state, listas: { list: listUp, item: {} } };
+      return { ...state, todoList: { list: listUp, item: {} } };
+
     default:
       return state;
   }
 }
+export default Reducer;

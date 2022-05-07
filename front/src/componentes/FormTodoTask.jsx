@@ -2,13 +2,13 @@ import { useContext, useRef, useState } from "react";
 import { HOST_API } from "../conexiones/HOST_API";
 import { Store } from "../hooks/Store";
 
-export const Form = ({ idTareas }) => {
+export const FormTodoTask = ({ id_tareas }) => {
   const formRef = useRef(null);
   const {
     dispatch,
-    state: { todo },
+    state: { todoTask },
   } = useContext(Store);
-  const item = todo.item;
+  const item = todoTask.item;
   const [state, setState] = useState(item);
   const [isDisabled, setIsDisabled] = useState(true);
   const [hasWritten, setHasWritten] = useState(false);
@@ -21,11 +21,11 @@ export const Form = ({ idTareas }) => {
     const request = {
       name: state.name,
       id: null,
-      completado: false,
-      idTareas: idTareas,
+      completed: false,
+      id_tareas: id_tareas,
     };
 
-    fetch(HOST_API + "tarea", {
+    fetch(HOST_API + "/todoTask", {
       method: "POST",
       body: JSON.stringify(request),
       headers: {
@@ -33,8 +33,8 @@ export const Form = ({ idTareas }) => {
       },
     })
       .then((response) => response.json())
-      .then((todo) => {
-        dispatch({ type: "add-item", item: todo });
+      .then((todoTask) => {
+        dispatch({ type: "add-item", item: todoTask });
         setState({ name: "" });
         formRef.current.reset();
       });
@@ -46,11 +46,11 @@ export const Form = ({ idTareas }) => {
     const request = {
       name: state.name,
       id: item.id,
-      isCompletado: item.isCompleted,
-      idTareas: idTareas,
+      isCompleted: item.isCompleted,
+      id_tareas: id_tareas,
     };
 
-    fetch(HOST_API + "tarea", {
+    fetch(HOST_API + "/todoTask", {
       method: "PUT",
       body: JSON.stringify(request),
       headers: {
@@ -58,8 +58,8 @@ export const Form = ({ idTareas }) => {
       },
     })
       .then((response) => response.json())
-      .then((todo) => {
-        dispatch({ type: "update-item", item: todo });
+      .then((todoTask) => {
+        dispatch({ type: "update-item", item: todoTask });
         setState({ name: "" });
         formRef.current.reset();
       });
@@ -71,23 +71,23 @@ export const Form = ({ idTareas }) => {
         <input
           type="text"
           name="name"
-          placeholder="¿Qué piensas hacer hoy?"
-          defaultValue={item.idTareas === idTareas ? item.name : ""}
+          placeholder="¿Qué deseas hacer?"
+          defaultValue={item.id_tareas === id_tareas ? item.name : ""}
           onChange={(event) => {
-            setState({ ...state, name: event.target.value });
             setHasWritten(true);
-            setIsDisabled(event.target.value.length > 0 ? false : true);
+            setIsDisabled(event.target.value.length > 1 ? false : true);
+            setState({ ...state, name: event.target.value });
           }}
         />
-        {item.id && item.idTareas === idTareas && (
-          <button className="updateButton" onClick={onEdit}>
+        {item.id && item.id_tareas === id_tareas && (
+          <button className="editar" onClick={onEdit}>
             Actualizar
           </button>
         )}
         {!item.id && (
           <button
             dissbled={isDisabled}
-            className="CrearBoton"
+            className="crear"
             onClick={onAdd}
           >
             Crear
@@ -100,4 +100,4 @@ export const Form = ({ idTareas }) => {
     </div>
   );
 };
-export default Form;
+export default FormTodoTask;

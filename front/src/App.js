@@ -1,14 +1,18 @@
 import React from "react";
-import { FormLista } from "./componentes/FormLista.jsx";
+import { FormTodoList } from "./componentes/FormTodoList";
 import { List } from "./componentes/List";
 import { StoreProvider } from "./hooks/StoreProvider";
 
 function App() {
   return (
     <StoreProvider>
+      <div>
       <h3>To-Do List Doris</h3>
-      <FormLista />
+      <FormTodoList />
+      </div>
+      <div>
       <List />
+      </div>
     </StoreProvider>
   );
 }
