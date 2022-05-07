@@ -1,28 +1,24 @@
 package co.com.sofka.crud.Dtos;
 
-import co.com.sofka.crud.Models.Tarea;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import java.util.List;
+import javax.persistence.Id;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder(toBuilder = true)
-public class TodoDto {
+public class TodoTaskDto {
 
-    @NotBlank
+    @Id
     private Long id;
 
-    @NotBlank
     private String name;
 
-    @NotBlank
-    private List<Tarea> groupTareas;
+    private Boolean completed;
 
-
+    private Long id_tareas;
 }

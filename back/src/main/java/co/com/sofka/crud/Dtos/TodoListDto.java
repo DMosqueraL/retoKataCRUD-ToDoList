@@ -1,27 +1,23 @@
 package co.com.sofka.crud.Dtos;
 
+import co.com.sofka.crud.Models.TodoTask;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder(toBuilder = true)
-public class TareaDto {
+public class TodoListDto {
 
-    @NotBlank
     private Long id;
 
-    @NotBlank
     private String name;
 
-    @NotBlank
-    private Boolean completed;
+    private List<TodoTask> groupTodoTasks;
 
-    @NotBlank
-    private Long idTareas;
 }

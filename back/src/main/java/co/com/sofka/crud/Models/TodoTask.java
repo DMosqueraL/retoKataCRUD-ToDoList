@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Builder(toBuilder = true)
 @Table(name = "tareas")
-public class Tarea {
+public class TodoTask {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,15 +21,12 @@ public class Tarea {
     private Long id;
 
     @Column(name = "name")
-    @NotBlank
     private String name;
 
-    @Column(name = "Completado")
-    @NotBlank
+    @Column(name = "completed")
     private Boolean completed;
 
-    @Column(name = "idTareas")
-    @NotBlank
-    private Long idTareas;
+    @Column(name = "id_tareas")
+    private Long id_tareas;
 
 }
