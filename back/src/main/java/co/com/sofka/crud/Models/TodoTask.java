@@ -7,6 +7,18 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+/**
+ * Anotaciones para identificar que es una entidad - Spring Boot (@Entity)
+ * La creación de la tabla - Spring Boot (@Table)
+ * Las demás anotaciones las suministra Lombok para el ahorro de código
+ * (@NoArgsConstructor -  @AllArgsConstructor) -> Crea dos constructores, el primero vacío y
+ * el segundo con todos los atributos respectivamente.
+ * (@Data) Crea los getters/setters/toString de la entidad
+ *
+ * @Autor: Doris Mosquera
+ * @versión: 1.0.0
+ */
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

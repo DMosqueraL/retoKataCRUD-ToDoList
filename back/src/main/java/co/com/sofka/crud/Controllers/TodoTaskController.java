@@ -6,6 +6,13 @@ import co.com.sofka.crud.Services.TodoTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Clase controladora, recibe todas los métodos de petición HTTP del front y
+ * da respuesta a ellos por medio de DTO's
+ * @Autor: Doris Mosquera Lozano
+ * @versión: 1.0.0
+ */
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000")

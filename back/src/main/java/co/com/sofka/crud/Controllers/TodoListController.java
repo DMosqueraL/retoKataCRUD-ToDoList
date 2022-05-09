@@ -6,6 +6,13 @@ import co.com.sofka.crud.Services.TodoListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Clase controladora, recibe todas los métodos de petición HTTP del front y
+ * da respuesta a ellos por medio de DTO's
+ * @Autor: Doris Mosquera Lozano
+ * @versión: 1.0.0
+ */
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -43,6 +50,7 @@ public class TodoListController {
         }
         todoListService.deleteById(id);
     }
+
     @GetMapping(value = "/todoList/{id}")
     public TodoList obtenerTodo(@PathVariable("id") Long id) {
         if (todoListService.existsById(id)) {

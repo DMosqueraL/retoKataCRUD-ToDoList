@@ -16,6 +16,13 @@ public class TodoTaskService {
     @Autowired
     private TodoTaskRepository todoTaskRepository;
 
+    /**
+     * Métodos para aplicar el CRUD -> Guardar (Crear), Ver (Read), Actualizar (Update), Borrar (Delete)
+     * Se hacen uso de los métodos propios de la CRUD Repository
+     *  @return DTO's
+     *  @Autor: Doris Mosquera
+     *  @versión: 1.0.0
+     */
     public Iterable<TodoTaskDto> listasTareas() {
         Iterable<TodoTask> listaTareas = todoTaskRepository.findAll();
         ArrayList<TodoTaskDto> listaTareasDtos = new ArrayList<>();
