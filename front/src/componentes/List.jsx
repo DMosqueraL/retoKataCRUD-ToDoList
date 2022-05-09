@@ -1,10 +1,12 @@
-import React, { useContext, useEffect, Fragment  } from "react";
+import { useContext, useEffect, Fragment } from "react";
 import { Store } from "../hooks/Store";
 import { HOST_API } from "../conexiones/HOST_API";
-import FormTodoTask from "../componentes/FormTodoTask"
+import FormTodoTask from "../componentes/FormTodoTask";
+import { RiDeleteBin2Line } from "react-icons/ri";
+import { FiEdit } from "react-icons/fi";
+import { RiChatDeleteLine } from "react-icons/ri";
 
 export const List = () => {
-  
   const {
     dispatch,
     state: { todoTask, todoList },
@@ -47,7 +49,7 @@ export const List = () => {
       completed: event.target.checked,
       id_tareas: id_tareas,
     };
-    
+
     fetch(HOST_API + "/todoTask", {
       method: "PUT",
       body: JSON.stringify(request),
@@ -85,37 +87,44 @@ export const List = () => {
 
   const decorationDone = {
     textDecoration: "line-through",
+    
   };
 
   return (
     <Fragment>
-      <table cellSpacing="0">
+      <table className="w3-table">
         <tbody>
           {currentList.map((list) => {
             return (
               <Fragment key={list.id}>
                 <div className="listDiv">
                   <tr>
-                    <td id="TitleText">{list.name}</td>
+                    <td  id="TitleText">
+                      <h3>Proyecto: {list.name}</h3>
+                    </td>
                     <td>
                       <button
-                      className="eliminar"
+                        // className="custom-btn btn-7"
                         onClick={() => onDeleteList(list.id)}
                       >
-                        Eliminar
+                        {/* Eliminar */}
+                      <RiChatDeleteLine className="icono" border="0" />
                       </button>
                     </td>
                   </tr>
                   <tr>
-                    <td>
-                      <FormTodoTask id_tareas={list.id} />
-                    </td>
+                    <div>
+                      <td>
+                        <FormTodoTask id_tareas={list.id} />
+                      </td>
+                    </div>
                   </tr>
 
                   <tr>
-                    <td className="td">Id</td>
-                    <td className="td">Tarea</td>
-                    <td className="td">¿Completa?</td>
+                    {/* <td className="td">Id</td> */}
+                    <th className="td-text">Tareas Programadas</th>
+                    <th className="td-text">¿Completa?</th>
+                    <th id="text-center" className="td-text"></th>
                   </tr>
                   {currentTodos.map((todo) => {
                     if (todo.id_tareas === list.id) {
@@ -124,9 +133,9 @@ export const List = () => {
                           key={todo.id}
                           style={todo.completed ? decorationDone : {}}
                         >
-                          <td>{todo.id}</td>
+                          {/* <td >{todo.id}</td> */}
                           <td>{todo.name}</td>
-                          <td>
+                          <td className="text-center">
                             <input
                               type="checkbox"
                               defaultChecked={todo.completed}
@@ -135,20 +144,24 @@ export const List = () => {
                               }
                             ></input>
                           </td>
+                          {!todo.completed && (
+                            <td className="text-center">
+                              <button
+                                onClick={() => onEdit(todo)}
+                                className="icono-edit"
+                              >
+                                {/* Editar */}
+                                <FiEdit className="icono" />
+                              </button>
+                            </td>
+                          )}
                           <td>
                             <button
-                              className="eliminar"
+                              className="icono-delete"
                               onClick={() => onDeleteTask(todo.id)}
                             >
-                              Eliminar
-                            </button>
-                          </td>
-                          <td>
-                            <button
-                              onClick={() => onEdit(todo)}
-                              className="editar"
-                            >
-                              Editar
+                              {/* Eliminar*/}
+                              <RiDeleteBin2Line className="icono" />
                             </button>
                           </td>
                         </tr>

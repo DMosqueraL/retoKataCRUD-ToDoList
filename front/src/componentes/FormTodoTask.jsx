@@ -68,31 +68,44 @@ export const FormTodoTask = ({ id_tareas }) => {
   return (
     <div>
       <form ref={formRef}>
-        <input
-          type="text"
-          name="name"
-          placeholder="¿Qué deseas hacer?"
-          defaultValue={item.id_tareas === id_tareas ? item.name : ""}
-          onChange={(event) => {
-            setHasWritten(true);
-            setIsDisabled(event.target.value.length > 1 ? false : true);
-            setState({ ...state, name: event.target.value });
-          }}
-        />
-        {item.id && item.id_tareas === id_tareas && (
-          <button className="editar" onClick={onEdit}>
-            Actualizar
-          </button>
-        )}
-        {!item.id && (
-          <button
-            dissbled={isDisabled}
-            className="crear"
-            onClick={onAdd}
-          >
-            Crear
-          </button>
-        )}
+        <div class="w3-table">
+          <span className="contenedor-boton">
+          <input
+            id="nombre-tabla"
+            className="w3-input w3-animate-input"
+            // style="width:30%"
+            // className="form-control"
+            type="text"
+            name="name"
+            placeholder="Tarea Nueva"
+            required="required"
+            defaultValue={item.id_tareas === id_tareas ? item.name : ""}
+            onChange={(event) => {
+              setHasWritten(true);
+              setIsDisabled(event.target.value.length ? false : true);
+              setState({ ...state, name: event.target.value });
+            }}
+          />
+          </span>
+          {item.id && item.id_tareas === id_tareas && (
+            <span className="contenedor-boton">
+              <button className="custom-btn btn-7" onClick={onEdit}>
+                Actualizar
+              </button>
+            </span>
+          )}
+        </div>
+        <span className="contenedor-boton">
+          {!item.id && (
+            <button
+              dissbled={isDisabled}
+              className="custom-btn btn-7 "
+              onClick={onAdd}
+            >
+              Agregar
+            </button>
+          )}
+        </span>
       </form>
       {isDisabled && hasWritten && (
         <span className="campo-obligatorio">Este campo es obligatorio</span>

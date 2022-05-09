@@ -41,25 +41,27 @@ export const FormTodoList = () => {
 
   return (
     <Fragment>
-      <form ref={formRef}>
-        <h3 id="Listas">Listas</h3>
+      <form className="form1" ref={formRef}>
+        <h6 id="">¡Qué esperas para enlistar tus PROYECTOS!</h6>
         <input
-          className="form-control me-2"
+          className="w3-input"
+          // className="form-control"
           type="text"
           name="name"
-          placeholder="Nombre de la lista"
+          placeholder="Nombre del proyecto"          
           defaultValue={item.name}
+          required
           id="listForms"
           onChange={(event) => {
             sethasWritten(true);
-            setIsDisabled(event.target.value.length > 1 ? false : true);
+            setIsDisabled(event.target.value.length ? false : true);
             setState({ ...state, name: event.target.value });
           }}
         ></input>
         {!item.id && (
           <button
             disabled={isDisabled}
-            className="Crear-boton"
+            className="custom-btn btn-7"
             onClick={onAdd}
           >
             Crear
@@ -67,7 +69,7 @@ export const FormTodoList = () => {
         )}
 
         {isDisabled && hasWritten && (
-          <p className="MinimunLength">Este campo es obligatorio</p>          
+          <p className="desactivado">Este campo es obligatorio</p>          
         )}
         {/* required; */}
       </form>

@@ -51,17 +51,4 @@ public class TodoTaskService {
     }
 
 
-
-
-
-
-
-    /*public TodoTaskDto actualizarTarea(TodoTaskDto tareaDto) {
-        if (tareaRepository.existsById(tareaDto.getId())) {
-            return tareaRepository.save(tarea);
-        }
-        throw new RuntimeException("Id no encontrado en la base de datos");
-    }*/
-
-
 }
