@@ -2,6 +2,10 @@ import { useContext, useState, useRef, Fragment } from "react";
 import { HOST_API } from "../conexiones/HOST_API";
 import { Store } from "../hooks/Store";
 
+/*
+- Acciones o funciones de la entidad TodoList (La que se identica en la interfaz
+  como proyecto)
+*/
 
 export const FormTodoList = () => {
   const formRef = useRef(null);

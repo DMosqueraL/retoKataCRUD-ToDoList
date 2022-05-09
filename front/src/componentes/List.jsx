@@ -6,6 +6,10 @@ import { RiDeleteBin2Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { RiChatDeleteLine } from "react-icons/ri";
 
+/*
+- Operaciones CRUD la lista (proyecto) y las tareas 
+*/
+
 export const List = () => {
   const {
     dispatch,

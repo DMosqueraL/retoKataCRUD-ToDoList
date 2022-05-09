@@ -1,3 +1,7 @@
+/*
+- Función o componente enrutador de las peticiones HTTP
+*/
+
 export function Reducer(state, action) {
   switch (action.type) {
     case "update-item":

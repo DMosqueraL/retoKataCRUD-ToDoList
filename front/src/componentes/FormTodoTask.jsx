@@ -2,6 +2,11 @@ import { useContext, useRef, useState } from "react";
 import { HOST_API } from "../conexiones/HOST_API";
 import { Store } from "../hooks/Store";
 
+/*
+- Acciones o funciones de la entidad TodoTask (La que se identica en la interfaz
+  como tareas)
+*/
+
 export const FormTodoTask = ({ id_tareas }) => {
   const formRef = useRef(null);
   const {
